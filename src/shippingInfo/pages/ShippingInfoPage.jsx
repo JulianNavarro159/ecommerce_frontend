@@ -5,11 +5,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from 'react-router-dom';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import { useGetAddressByIdQuery, usePostOrderMutation, useGetUserByTokenQuery, useDeleteAddressMutation, useGetShippingPriceQuery } from '../../store/api';
 import { setShippingInfo } from '../../store/shippingInfo/shippingInfoSlice';
 import AddAddressModal from '../component/AddAddressModal';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 
 export const ShippingInfoPage = () => {
     const { cartTotalAmount, cartItems } = useSelector(state => state.cart);
@@ -20,7 +19,7 @@ export const ShippingInfoPage = () => {
 
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedAddress, setSelectedAddress] = useState(null);
-    const [showNoAddressesMessage, setShowNoAddressesMessage] = useState(false); 
+    const [showNoAddressesMessage, setShowNoAddressesMessage] = useState(false);
     const [shippingCost, setShippingCost] = useState(0);
     const [selectedShippingOption, setSelectedShippingOption] = useState('');
 
@@ -28,6 +27,8 @@ export const ShippingInfoPage = () => {
     const { data: addresses, error, isLoading: addressesLoading, refetch: refetchAddresses } = useGetAddressByIdQuery(user?.idUser, {
         skip: !user?.idUser,
     });
+
+    console.log('addresses:', addresses);
     const [deleteAddress] = useDeleteAddressMutation();
 
     const handleModalOpen = () => {
@@ -127,29 +128,35 @@ export const ShippingInfoPage = () => {
                 console.error('La función createOrder no está definida.');
                 return;
             }
-    
+
             if (!cartItems || cartItems.length === 0) {
                 console.error('El carrito está vacío.');
                 return;
             }
-    
+
             const { emailUser, DNI, nameUser, lastNameUser } = user || {};
-    
+            const selectedAddr = addresses?.find(addr => addr.idUserAddress.toString() === selectedAddress);
+
+            if (!selectedAddr) {
+                console.error('No se ha seleccionado ninguna dirección.');
+                return;
+            }
+
             const cartItemsWithPrice = cartItems.map(item => ({
                 ...item,
                 priceProduct: parseFloat(item.priceProduct) || 0,
             }));
-    
+
             const payerData = {
                 email: emailUser,
                 identification: {
-                    type: "DNI",
+                    type: "CC",
                     number: DNI || '',
                 },
                 name: nameUser || '',
                 surname: lastNameUser || '',
             };
-    
+
             const orderItems = cartItemsWithPrice.map(item => {
                 const unitPrice = item.discountPriceProduct ? parseFloat(item.discountPriceProduct) : parseFloat(item.priceProduct);
                 return {
@@ -158,32 +165,24 @@ export const ShippingInfoPage = () => {
                     title: item.nameProduct,
                     unit_price: unitPrice,
                     quantity: item.quantity,
-                    currency_id: "ARS"
+                    currency_id: "COP"
                 };
             });
-    
-            // Añadir el costo de envío como un ítem adicional
-            if (shippingCost > 0) {
-                orderItems.push({
-                    id: 'shipping',
-                    category_id: 'shipping',
-                    title: selectedShippingOption === 'aSucursal' ? 'Envío a Sucursal' : 'Envío a Domicilio',
-                    unit_price: parseInt(shippingCost),
-                    quantity: 1,
-                    currency_id: "ARS"
-                });
-            }
-    
+
             const orderData = {
                 items: orderItems,
                 payer: payerData,
+                metadata: {
+                    coupon_code: "",
+                    id_user_address: selectedAddr.idUserAddress
+                }
             };
-    
+
             console.log('Datos de la orden de compra:', orderData);
-    
+
             const response = await createOrder(orderData).unwrap();
             console.log('Order created:', response);
-    
+
             if (response.init_point) {
                 window.location.href = response.init_point;
             } else {
@@ -196,6 +195,7 @@ export const ShippingInfoPage = () => {
             }
         }
     };
+    
 
     return (
         <EcommerceUI>

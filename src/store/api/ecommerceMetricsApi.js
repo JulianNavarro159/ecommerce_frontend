@@ -4,7 +4,7 @@ export const ecommerceMetricsApi = createApi({
 
     reducerPath: 'ecommerceMetricsApi',
     baseQuery: fetchBaseQuery({ 
-        baseUrl: 'http://localhost:3001'
+        baseUrl: import.meta.env.VITE_BASE_QUERY_URL
     }),
     tagTypes: ['Metrics'],
     endpoints: (builder) => ({

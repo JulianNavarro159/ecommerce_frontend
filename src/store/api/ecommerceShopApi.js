@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const ecommerceShopApi = createApi({
     reducerPath: 'ecommerceShopApi',
     baseQuery: fetchBaseQuery({ 
-        baseUrl: 'http://localhost:3001'
+        baseUrl: import.meta.env.VITE_BASE_QUERY_URL
     }),
     tagTypes: ['Shop'],
     endpoints: (builder) => ({
@@ -30,13 +30,13 @@ export const ecommerceShopApi = createApi({
         }),
         // Get details
         getShopDetails: builder.query({
-        query: () => '/shop/details',
+        query: () => '/details',
         providesTags: ['Shop'],
         }),
         // Get details by Token
         getDetailsByToken: builder.query({
             query: (token) => ({
-                url: '/shop/details/token',
+                url: '/details/token',
                 method: 'GET',
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -46,7 +46,7 @@ export const ecommerceShopApi = createApi({
         }),
         // Get payment
         getShopPayment: builder.query({
-            query: () => '/shop/payment',
+            query: () => '/payment',
             providesTags: ['Shop'],
         }),
 
