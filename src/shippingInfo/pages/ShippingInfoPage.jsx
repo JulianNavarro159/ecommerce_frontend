@@ -168,7 +168,9 @@ export const ShippingInfoPage = () => {
                     currency_id: "COP"
                 };
             });
+    
 
+    
             const orderData = {
                 items: orderItems,
                 payer: payerData,
