@@ -44,5 +44,3 @@ export const store = configureStore({
             .concat(ecommerceShopApi.middleware)
             .concat(ecommerceMetricsApi.middleware),
 });
-
-

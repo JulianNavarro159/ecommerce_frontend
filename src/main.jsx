@@ -23,6 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       authorizationParams={{
         redirect_uri: window.location.origin
       }}
+      cacheLocation="localstorage"
     >
       <Provider store={store}>
         <BrowserRouter>
