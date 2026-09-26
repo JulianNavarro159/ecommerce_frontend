@@ -7,8 +7,7 @@ import KeyboardArrowLeftOutlinedIcon from '@mui/icons-material/KeyboardArrowLeft
 import KeyboardArrowRightOutlinedIcon from '@mui/icons-material/KeyboardArrowRightOutlined';
 
 export const CategoryProductsHome = ({ categoryId }) => {
-    const { data: categories, error, isLoading } = useGetCategoriesQuery({
-        refetchOnMountOrArgChange: true});
+    const { data: categories, error, isLoading } = useGetCategoriesQuery();
 
     if (isLoading) {
         return (

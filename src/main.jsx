@@ -6,10 +6,10 @@ import { Provider } from 'react-redux';
 import { store } from './store/';
 import { Auth0Provider } from '@auth0/auth0-react';
 
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
+import '@fontsource/roboto/latin-300.css';
+import '@fontsource/roboto/latin-400.css';
+import '@fontsource/roboto/latin-500.css';
+import '@fontsource/roboto/latin-700.css';
 
 // import './style.css'
 

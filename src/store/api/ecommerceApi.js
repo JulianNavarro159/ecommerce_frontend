@@ -22,12 +22,13 @@ export const ecommerceApi = createApi({
         }),
         getBrands: builder.query({
             query: () => '/products/brands',
+            keepUnusedDataFor: 3600,
         }),
 
-       
         getCategories: builder.query({
             query: () => '/products/category',
             providesTags: ['Categories'],
+            keepUnusedDataFor: 3600,
         }),
 
 
@@ -83,10 +84,10 @@ export const ecommerceApi = createApi({
         filterProducts: builder.query({
             query: ({ name, price, year, orderBy, orderDirection, priceMin, priceMax, category, brand, pageIn }) => {
                 const queryUrl = `/filterproducts?pageIn=${pageIn}&name=${name}&price=${price}&year=${year}&orderBy=${orderBy}&orderDirection=${orderDirection}&priceMin=${priceMin}&priceMax=${priceMax}&category=${category}&brand=${brand}`;
-                console.log('Parámetros enviados:', { name, price, year, orderBy, orderDirection, priceMin, priceMax, category, brand });
                 return queryUrl;
             },
             providesTags: ['Products'],
+            keepUnusedDataFor: 300,
         }),
 
         searchProductsByName: builder.query({

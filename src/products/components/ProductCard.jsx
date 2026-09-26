@@ -28,28 +28,11 @@ const ProductCard = ({ product, dispatch, cart = [] }) => {
   
 
   const { data: categories } = useGetCategoriesQuery();
-  const [category, setCategory] = useState(null);
-
-  useEffect(() => {
-    if (categories) {
-      const foundCategory = categories.find(cat => cat.idCategory === product.idCategory);
-      setCategory(foundCategory);
-    }
-  }, [categories, product]);
+  const category = categories ? categories.find(cat => cat.idCategory === product.idCategory) : null;
 
   const { data: averageScores } = useGetAverageScoresQuery(); 
-  const [averageScore, setAverageScore] = useState(null);
-
-  useEffect(() => {
-    if (averageScores) {
-      const productScore = averageScores.find(item => item.idProduct === product.idProduct);
-      if (productScore) {
-        setAverageScore(parseFloat(productScore.averageScore));
-      } else {
-        setAverageScore(null);
-      }
-    }
-  }, [averageScores, product]);
+  const productScore = averageScores ? averageScores.find(item => item.idProduct === product.idProduct) : null;
+  const averageScore = productScore ? parseFloat(productScore.averageScore) : null;
 
 
   useEffect(() => {
@@ -138,6 +121,8 @@ const ProductCard = ({ product, dispatch, cart = [] }) => {
             <img
               src={product.imageProducts}
               alt={product.nameProduct}
+              loading="lazy"
+              decoding="async"
               style={{
                 position: 'absolute',
                 top: 0,

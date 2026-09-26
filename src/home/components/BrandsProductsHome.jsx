@@ -4,8 +4,7 @@ import Carousel from 'react-material-ui-carousel';
 import { Link } from 'react-router-dom';
 
 export const BrandsProductsHome = ({brandId}) => {
-    const { data, error, isLoading } = useGetBrandsQuery({
-        refetchOnMountOrArgChange: true});
+    const { data, error, isLoading } = useGetBrandsQuery();
 
     if (isLoading) return <Typography>Cargando...</Typography>;
     if (error) return <Typography>Error: {error.message}</Typography>;
