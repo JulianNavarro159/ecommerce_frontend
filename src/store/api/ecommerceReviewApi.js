@@ -3,7 +3,7 @@ const baseURl = import.meta.env.VITE_BASE_URL;
 export const ecommerceReviewApi = createApi({
     reducerPath: 'ecommerceReviewApi',
     baseQuery: fetchBaseQuery({ 
-        baseUrl: import.meta.env.VITE_BASE_QUERY_URL,
+        baseUrl: import.meta.env.VITE_BASE_QUERY_URL || 'https://ecommerce-backend-ydf5.onrender.com',
     }),
     tagTypes: ['Reviews'],
     endpoints: (builder) => ({

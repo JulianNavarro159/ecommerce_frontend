@@ -4,7 +4,7 @@ export const ecommerceMetricsApi = createApi({
 
     reducerPath: 'ecommerceMetricsApi',
     baseQuery: fetchBaseQuery({ 
-        baseUrl: import.meta.env.VITE_BASE_QUERY_URL
+        baseUrl: import.meta.env.VITE_BASE_QUERY_URL || 'https://ecommerce-backend-ydf5.onrender.com',
     }),
     tagTypes: ['Metrics'],
     endpoints: (builder) => ({

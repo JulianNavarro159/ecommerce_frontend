@@ -4,7 +4,7 @@ const baseURl = import.meta.env.VITE_BASE_URL;
 export const ecommerceApi = createApi({
     reducerPath: 'ecommerceApi',
     baseQuery: fetchBaseQuery({ 
-        baseUrl: import.meta.env.VITE_BASE_QUERY_URL, //http://localhost:3001, www.ecommercetech.software
+        baseUrl: import.meta.env.VITE_BASE_QUERY_URL || 'https://ecommerce-backend-ydf5.onrender.com',
     }),
     tagTypes: ['Products', 'Categories', 'Brands'],
     endpoints: (builder) => ({

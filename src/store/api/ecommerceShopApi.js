@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const ecommerceShopApi = createApi({
     reducerPath: 'ecommerceShopApi',
     baseQuery: fetchBaseQuery({ 
-        baseUrl: import.meta.env.VITE_BASE_QUERY_URL
+        baseUrl: import.meta.env.VITE_BASE_QUERY_URL || 'https://ecommerce-backend-ydf5.onrender.com',
     }),
     tagTypes: ['Shop'],
     endpoints: (builder) => ({

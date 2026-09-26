@@ -5,7 +5,7 @@ const baseURl = import.meta.env.VITE_BASE_URL;
 export const ecommerceQuestionsApi = createApi({
     reducerPath: 'ecommerceQuestionsApi',
     baseQuery: fetchBaseQuery({ 
-        baseUrl: import.meta.env.VITE_BASE_QUERY_URL,
+        baseUrl: import.meta.env.VITE_BASE_QUERY_URL || 'https://ecommerce-backend-ydf5.onrender.com',
     }),
     tagTypes: ['Comments'],
     endpoints: (builder) => ({
